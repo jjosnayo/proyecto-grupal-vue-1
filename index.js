@@ -1,42 +1,28 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import LoginView from '../views/LoginView.vue'
+import { createStore } from 'vuex'
 
-const routes = [
-  {
-    path: '/',
-    name: 'login',
-    component: LoginView
+export default createStore({
+  state: {
+    mi_usuario: "",
+    mi_contrasenha: ""
   },
-  {
-    path: '/home',
-    name: 'home',
-    component: () => import('../views/HomeView.vue')
+  mutations: {
+    actualizar_usuario(state, valor){
+      state.mi_usuario = valor
+    },
+    actualizar_contrasenha(state, valor){
+      state.mi_contrasenha = valor
+    }
   },
-  {
-    path: '/registrar',
-    name: 'registrar',
-    component: () => import('../views/RegisterView.vue')
+  getters: {
   },
-  {
-    path: '/compras',
-    name: 'compras',
-    component: () => import('../views/ComprasView.vue')
+  actions: {
+      accion_act_usuario(contexto, act){
+          contexto.commit("actualizar_usuario", act)
+      },
+      accion_act_contra(contexto, act){
+          contexto.commit("actualizar_contrasenha", act)
+      }
   },
-  {
-    path: '/ventas',
-    name: 'ventas',
-    component: () => import('../views/VentasView.vue')
-  },
-  {
-    path: '/registrar_producto',
-    name: 'registrar_producto',
-    component: () => import('../views/RegistrarProductoView.vue')
-  },
-]
-
-const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes
+  modules: {
+  }
 })
-
-export default router
