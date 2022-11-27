@@ -18,11 +18,6 @@ const routes = [
     component: () => import('../views/RegisterView.vue')
   },
   {
-    path: '/compras',
-    name: 'compras',
-    component: () => import('../views/ComprasView.vue')
-  },
-  {
     path: '/ventas',
     name: 'ventas',
     component: () => import('../views/VentasView.vue')
@@ -32,6 +27,16 @@ const routes = [
     name: 'registrar_producto',
     component: () => import('../views/RegistrarProductoView.vue')
   },
+  {
+    path: '/compras',
+    name: 'compras',
+    component: () => import('../views/ComprasView.vue')
+  },
+  {
+    path: '/inventario',
+    name: 'inventario',
+    component: () => import('../views/InventarioView.vue')
+  }
 ]
 
 const router = createRouter({
