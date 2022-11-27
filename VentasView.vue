@@ -30,7 +30,7 @@ export default {
       ]
     }
   }
-  // se supone que productos debe contener todos los productos registrados de la base de datos mediante flask
+  // se supone que productos debe contener todos los productos del usuario con el que te has registrado de la base de datos mediante flask
   // usando un fetch y created
 }
 </script>
