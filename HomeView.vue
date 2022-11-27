@@ -8,7 +8,8 @@
   </div>
   <nav>
     <router-link to="/compras">Comprar</router-link> |
-    <router-link to="/ventas">Vender</router-link> <br>
+    <router-link to="/ventas">Vender</router-link> |
+    <router-link to="/inventario">Inventario</router-link> <br>
     <router-link to="/">Logout</router-link>
   </nav>
 </template>
