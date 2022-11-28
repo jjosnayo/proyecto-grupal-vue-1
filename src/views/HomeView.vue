@@ -19,15 +19,17 @@ export default {
   name: 'HomeView',
   data(){
     return{
-      usuarios: [
-        {nombre_usuario: "usuario1", contrasenha: "a101010a"},
-        {nombre_usuario: "usuario2", contrasenha: "b202020b"},
-        {nombre_usuario: "usuario3", contrasenha: "c303030c"}
-      ]
+      usuarios: []
     }
+  },
+  methods: {
+    async obtener_usuarios(){
+      await fetch('http://127.0.0.1:5000/utecshop/usuarios')
+          .then((resp) => resp.json()).then((datos) => this.usuarios = datos)
+    }
+  },
+  created(){
+    this.obtener_usuarios()
   }
-  // se supone que usuarios debe contener todos los usuarios registrados recibiendolos de la base de datos
-  // mediante flask usando un fetch y created
-  // se debe filtrar en el template el usuario con el que te acabas de logear o registrar
 }
 </script>

@@ -2,12 +2,20 @@
   <div>
     <table>
       <tr>
+        <th>Codigo</th>
+        <th>Usuario</th>
         <th>Nombre</th>
-        <th>Tipo</th>
+        <th>Precio</th>
+        <th>Marca</th>
+        <th>Categoria</th>
       </tr>
       <tr v-for="producto of productos" v-bind:key="producto">
-        <td>{{producto.nombre_producto}}</td>
-        <td>{{producto.tipo_producto}}</td>
+        <td>{{producto.codigo}}</td>
+        <td>{{producto.usuario_nombre}}</td>
+        <td>{{producto.nombre}}</td>
+        <td>{{producto.precio}}</td>
+        <td>{{producto.marca}}</td>
+        <td>{{producto.tipo}}</td>
       </tr>
     </table>
   </div>
@@ -22,15 +30,24 @@ export default {
   name: "VentasView",
   data(){
     return{
-      productos: [
-        {nombre_producto: "oreo", tipo_producto: "galleta"},
-        {nombre_producto: "coca cola", tipo_producto: "gaseosa"},
-        {nombre_producto: "sublime", tipo_producto: "chocolate"}
-      ]
+      productos: []
     }
+  },
+  methods: {
+    async obtener_productos(){
+      let usuario_p = {usuario: this.$store.state.mi_usuario}
+      await fetch('http://127.0.0.1:5000/utecshop/vender', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(usuario_p)
+      }).then((resp)=> resp.json()).then((datos)=> this.productos = datos)
+    }
+  },
+  created(){
+    this.obtener_productos()
   }
-  // se supone que productos debe contener todos los productos del usuario con el que te has
-  // registrado de la base de datos mediante flask usando un fetch y created
 }
 </script>
 

@@ -33,8 +33,20 @@ export default {
     },
     verificar_contrasenha(e){
       this.contrasenha = e.target.value
+    },
+    async verificar_usuario(){
+      let v_usuario = {nombre_usuario: this.nombre_usuario, contrasenha: this.contrasenha}
+      await fetch('http://127.0.0.1:5000/utecshop/login', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(v_usuario)
+      }).then((resp)=> resp.json()).then((datos)=>{
+        if(datos.nombre_usuario === this.nombre_usuario && datos.contrasenha === this.contrasenha)
+          this.casa()
+      })
     }
-    // se supone que se debe verificar si los datos estan en la base de datos mediante flask usando un fetch
   }
 }
 </script>

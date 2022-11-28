@@ -15,7 +15,7 @@
     <label>Categoria</label>
     <input type="text" v-bind:value="tipo" v-on:input="registrar_tipo"><br>
     <br>
-    <button v-on:click="productos">Registrar producto</button>
+    <button v-on:click="registrar_producto">Registrar producto</button>
   </div>
 </template>
 
@@ -52,9 +52,18 @@ export default {
     registrar_tipo(e){
       this.tipo = e.target.value
     },
+    async registrar_producto(){
+      let n_producto = {codigo: this.codigo, usuario: this.usuario_nombre, nombre: this.nombre,
+        precio: this.precio, marca: this.marca, categoria: this.tipo}
+      await fetch('http://127.0.0.1:5000/utecshop/registrar_producto', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(n_producto)
+      }).then(this.productos)
+    }
   }
-  // se supone que los datos del input y el valor del usuario se tienen que guardar en la base de datos mediante
-  // flask usando un fetch
 }
 </script>
 
