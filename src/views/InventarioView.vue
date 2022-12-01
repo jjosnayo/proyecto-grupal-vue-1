@@ -2,12 +2,14 @@
   <div>
     <table>
       <tr>
-        <th>Usuario</th>
-        <th>Producto</th>
+        <th>Numero de compra</th>
+        <th>Codigo de producto</th>
+        <th>Vendedor</th>
       </tr>
       <tr v-for="compra of compras" v-bind:key="compra">
-        <td>{{compra.nombre_usuario}}</td>
-        <td>{{compra.nombre_producto}}</td>
+        <td>{{compra.codigo_c}}</td>
+        <td>{{compra.codigo_p}}</td>
+        <td>{{compra.usuario_v}}</td>
       </tr>
     </table>
   </div>
@@ -21,12 +23,23 @@ export default {
   name: "InventarioView",
   data(){
     return{
-      compras: [
-        {nombre_usuario: "usuario1", nombre_producto: "oreo"},
-        {nombre_usuario: "usuario2", nombre_producto: "coca cola"},
-        {nombre_usuario: "usuario3", nombre_producto: "sublime"}
-      ]
+      compras: []
     }
+  },
+  methods: {
+    async obtener_compras(){
+      let usuario_c = {usuario: this.$store.state.mi_usuario}
+      await fetch('http://127.0.0.1:5000/utecshop/inventario', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(usuario_c)
+      }).then((resp)=> resp.json()).then((datos)=> this.compras = datos)
+    }
+  },
+  created(){
+    this.obtener_compras()
   }
 }
 </script>

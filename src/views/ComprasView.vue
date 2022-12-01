@@ -2,14 +2,23 @@
   <div class="compras">
     <table>
       <tr>
+        <th>Compra</th>
+        <th>Codigo</th>
+        <th>Usuario</th>
         <th>Nombre</th>
-        <th>Tipo</th>
+        <th>Precio</th>
+        <th>Marca</th>
+        <th>Categoria</th>
       </tr>
-      <tr v-for="producto of productos" v-bind:key="producto">
-        <td  v-if="producto.nombre_usuario !== $store.state.mi_usuario">{{producto.nombre_producto}}</td>
-        <td  v-if="producto.nombre_usuario !== $store.state.mi_usuario">{{producto.tipo_producto}}</td>
-        <button v-on:click="comprar(producto.codigo)">Comprar</button>
-        <td></td>
+      <tr v-for="(producto,index) of productos" v-bind:key="producto">
+        <td>{{index}}</td>
+        <td>{{producto.codigo}}</td>
+        <td>{{producto.usuario_nombre}}</td>
+        <td>{{producto.nombre}}</td>
+        <td>{{producto.precio}}</td>
+        <td>{{producto.marca}}</td>
+        <td>{{producto.tipo}}</td>
+        <button v-on:click="comprar(index, producto.codigo, producto.usuario_nombre)">Comprar</button>
       </tr>
     </table>
   </div>
@@ -23,24 +32,35 @@ export default {
   name: "ComprasView",
   data(){
     return{
-      productos: [
-        {nombre_producto: "glasita", tipo_producto: "galleta"},
-        {nombre_producto: "inca cola", tipo_producto: "gaseosa"},
-        {nombre_producto: "princesa", tipo_producto: "chocolate"}
-      ],
-      comprado: ""
+      productos: []
     }
   },
   methods: {
-    comprar(p){
-      this.comprado = p
-      // se supone que la función debe crear una compra con los datos del producto seleccionado,
-      // asignarlos a comprado y guardarlo en la base de datos mediante flask usando un fetch
+    async obtener_productos(){
+      let usuario_p = {usuario: this.$store.state.mi_usuario}
+      await fetch('http://127.0.0.1:5000/utecshop/comprar', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(usuario_p)
+      }).then((resp)=> resp.json()).then((datos)=> this.productos = datos)
+    },
+    async comprar(codigo_c, codigo_p, usuario_v){
+      let n_compra = {codigo_compra: codigo_c, codigo_producto: codigo_p,
+        usuario_comprador: this.$store.state.mi_usuario, usuario_vendedor: usuario_v}
+      await fetch('http://127.0.0.1:5000/utecshop/registrar_compra', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(n_compra)
+      }).then(()=>alert("producto comprado"))
     }
+  },
+  created(){
+    this.obtener_productos()
   }
-  // se supone que productos debe contener todos los productos registrados de la base de datos mediante flask
-  // usando un fetch y created, se debe filtrar en el template los productos que no sean del usuario con el que
-  // te acabas de logear
 }
 </script>
 

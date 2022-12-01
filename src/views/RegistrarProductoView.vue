@@ -31,7 +31,6 @@ export default {
       tipo: "",
       marca: ""
     }
-    // aquí se guarda el usuario con el que se está logeado actualmente para registrar sus productos
   },
   methods: {
     productos(){

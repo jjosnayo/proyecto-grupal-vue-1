@@ -3,7 +3,6 @@
     <table>
       <tr>
         <th>Codigo</th>
-        <th>Usuario</th>
         <th>Nombre</th>
         <th>Precio</th>
         <th>Marca</th>
@@ -11,7 +10,6 @@
       </tr>
       <tr v-for="producto of productos" v-bind:key="producto">
         <td>{{producto.codigo}}</td>
-        <td>{{producto.usuario_nombre}}</td>
         <td>{{producto.nombre}}</td>
         <td>{{producto.precio}}</td>
         <td>{{producto.marca}}</td>
