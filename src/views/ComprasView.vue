@@ -2,7 +2,6 @@
   <div class="compras">
     <table>
       <tr>
-        <th>Compra</th>
         <th>Codigo</th>
         <th>Usuario</th>
         <th>Nombre</th>
@@ -10,15 +9,14 @@
         <th>Marca</th>
         <th>Categoria</th>
       </tr>
-      <tr v-for="(producto,index) of productos" v-bind:key="producto">
-        <td>{{index}}</td>
+      <tr v-for="producto of productos" v-bind:key="producto">
         <td>{{producto.codigo}}</td>
         <td>{{producto.usuario_nombre}}</td>
         <td>{{producto.nombre}}</td>
         <td>{{producto.precio}}</td>
         <td>{{producto.marca}}</td>
         <td>{{producto.tipo}}</td>
-        <button v-on:click="comprar(index, producto.codigo, producto.usuario_nombre)">Comprar</button>
+        <button v-on:click="comprar(producto.codigo, producto.usuario_nombre)">Comprar</button>
       </tr>
     </table>
   </div>
@@ -46,9 +44,9 @@ export default {
         body: JSON.stringify(usuario_p)
       }).then((resp)=> resp.json()).then((datos)=> this.productos = datos)
     },
-    async comprar(codigo_c, codigo_p, usuario_v){
-      let n_compra = {codigo_compra: codigo_c, codigo_producto: codigo_p,
-        usuario_comprador: this.$store.state.mi_usuario, usuario_vendedor: usuario_v}
+    async comprar(codigo_p, usuario_v){
+      let n_compra = {codigo_producto: codigo_p, usuario_comprador: this.$store.state.mi_usuario,
+        usuario_vendedor: usuario_v}
       await fetch('http://127.0.0.1:5000/utecshop/registrar_compra', {
         method: 'POST',
         headers: {
